@@ -54,23 +54,13 @@ const Data = (function($){
 
     function search(event){
         if(event && event.which === 13) {
-            $.setList([
-                {
-                    full_name: 'JavaScript 1',
-                    created_at: '2020-07-25T20:10:50Z',
-                    forks: 15300
-                },
-                {
-                    full_name: 'JavaScript 2',
-                    created_at: '2020-07-25T20:10:50Z',
-                    forks: 18300
-                },
-                {
-                    full_name: 'JavaScript 3',
-                    created_at: '2020-07-25T20:10:50Z',
-                    forks: 2570
-                }
-            ])
+           const searchQuery = searchInput.value;
+           fetch(`https://api.github.com/search/repositories?q=${searchQuery}`)
+                .then(response => response.json())
+                .then(response => response.items)
+                .then($.setList);
+
+            
         }
     }
 })(Template)
